@@ -1,0 +1,20 @@
+# Bảo mật và điều hướng URL trên Apache Laragon
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /HRM/
+
+    # Chặn truy cập trực tiếp vào các thư mục cấu hình và database
+    RewriteRule ^(config|database|core|models)/ - [F,L]
+
+    # Nếu không phải là file hoặc thư mục vật lý, điều hướng qua index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Tắt duyệt thư mục
+Options -Indexes
+
+# Thiết lập mã hóa UTF-8 mặc định
+AddDefaultCharset UTF-8
+
